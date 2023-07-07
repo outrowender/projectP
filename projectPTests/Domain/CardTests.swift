@@ -15,9 +15,16 @@ final class CardTests: XCTestCase {
         XCTAssertGreaterThan(Card("J♥️"), Card("10♥️"))
     }
     
-    func testBiggerPairShouldBeBiggest() {
+    func testGreaterPairShouldWin() {
         let hand1 = Card.array("Q♠️ Q♦️")
         let hand2 = Card.array("J♠️ J♦️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, >, hand2))
+    }
+    
+    func testEqualPairsGreaterSuitShouldWin() {
+        let hand1 = Card.array("Q♠️ Q♦️")
+        let hand2 = Card.array("Q♣️ Q♥️")
         // Assert
         XCTAssertTrue(Card.compare(hand1, >, hand2))
     }

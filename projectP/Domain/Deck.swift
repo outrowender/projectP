@@ -120,7 +120,6 @@ extension Deck {
     private func isStraightFlush() -> [Card]? {
         let ranks = rankSequence()
         if ranks.count < 5 { return nil }
-        
         let sequence = suitSequence(ranks)
         if sequence.count < 5 { return nil }
         
@@ -130,9 +129,7 @@ extension Deck {
     // Three of a kind with a pair
     private func isFullHouse() -> [Card]? {
         guard let three = isKind(of: 3) else { return nil }
-        
         let remaining = cards.filter { !three.contains($0) }
-        
         guard let pair = isKind(of: 2, from: remaining) else { return nil }
         
         return three + pair
@@ -141,7 +138,6 @@ extension Deck {
     // A, K, Q, J, 10, all the same suit
     private func isRoyalFlush() -> [Card]? {
         guard let straightFlush = isStraightFlush() else { return nil }
-        
         if straightFlush.first?.rank != .ace { return nil }
         
         return straightFlush
@@ -177,7 +173,7 @@ extension Deck {
         var sequence = [Card]()
         
         for i in 1..<cards.count {
-            if cards[i-1].rank.rawValue == (cards[i].rank.rawValue + 1) {
+            if cards[i-1].rank.rawValue == (cards[i].rank.rawValue * 2) {
                 if sequence.isEmpty {
                     sequence.append(cards[i-1])
                 }

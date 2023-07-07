@@ -28,7 +28,7 @@ struct Card: Comparable, CustomStringConvertible {
         return from.components(separatedBy: " ").map { Card($0) }
     }
     
-    static func compare(_ lhs: [Card], _ operation: (Int8, Int8) -> Bool, _ rhs: [Card]) -> Bool {
+    static func compare(_ lhs: [Card], _ operation: (Int, Int) -> Bool, _ rhs: [Card]) -> Bool {
         let leftCards = lhs.map { $0.rank.rawValue + $0.suit.rawValue }.reduce(0, +)
         let rightCards = rhs.map { $0.rank.rawValue + $0.suit.rawValue }.reduce(0, +)
         return operation(leftCards, rightCards)
@@ -54,8 +54,8 @@ struct Card: Comparable, CustomStringConvertible {
 extension Card {
     // MARK: - Rank logic
     
-    enum Rank: Int8, Comparable, CustomStringConvertible {
-        case two = 2, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
+    enum Rank: Int, Comparable, CustomStringConvertible {
+        case two = 1, three = 2, four = 4, five = 8, six = 16, seven = 32, eight = 64, nine = 128, ten = 256, jack = 512, queen = 1024, king = 2048, ace = 4096
         
         init?(_ value: String) {
             let ranks: [String: Rank] = ["2": .two, "3": .three, "4": .four, "5": .five, "6": .six, "7": .seven, "8": .eight, "9": .nine, "10": .ten, "J": .jack, "Q": .queen, "K": .king, "A": .ace]
@@ -71,8 +71,7 @@ extension Card {
         }
         
         var description: String {
-            if self.rawValue <= 10 { return String(self.rawValue) }
-            let values: [Rank: String] = [.jack: "J", .queen: "Q", .king: "K", .ace: "A"]
+            let values: [Rank: String] = [.two: "2", .three: "3", .four: "4", .five: "5", .six: "6", .seven: "7", .eight: "8", .nine: "9", .ten: "10", .jack: "J", .queen: "Q", .king: "K", .ace: "A"]
             return values[self] ?? "?"
         }
     }
@@ -82,8 +81,8 @@ extension Card {
 extension Card {
     // MARK: - Suit logic
     
-    enum Suit: Int8, Comparable, CustomStringConvertible {
-        case spade = 4, heart = 3, club = 2, diamond = 1
+    enum Suit: Int, Comparable, CustomStringConvertible {
+        case spade = 65536, heart = 32768, club = 16384, diamond = 8192
         
         init?(_ value: String) {
             let suits: [String: Suit] = ["♣️": .club, "♦️": .diamond, "♠️": .spade, "♥️": .heart]
