@@ -15,8 +15,8 @@ final class DeckComputeTests: XCTestCase {
         // Arrange/Act
         let deck = Deck("A♦️ K♦️ Q♦️ J♦️ 7♠️", ours: "10♦️ 8♥️")
         // Assert
-        let expected = Card.array("A♦️ K♦️ Q♦️ J♦️ 10♦️")
-        XCTAssertEqual(deck.hand, .royalFlush(expected))
+        XCTAssertEqual(deck.strength, 1)
+        XCTAssertEqual(deck.hand, .royalFlush(Card.array("A♦️ K♦️ Q♦️ J♦️ 10♦️")))
     }
     
     func testComputeHandOf7ShouldReturnARoyalFlush() {
@@ -218,10 +218,10 @@ final class DeckComputeTests: XCTestCase {
     
     func testComputeFullHandOf2ShouldReturnAHighCard() {
         // Arrange/Act
-        let deck = Deck(nil, ours: "3♥️ J♦️")
+        let deck = Deck(nil, ours: "2♥️ 3♦️")
         // Assert
-        let expected = Card("J♦️")
-        XCTAssertEqual(deck.hand, .highCard(expected))
+        XCTAssertEqual(deck.strength, 0.11510204081632654)
+        XCTAssertEqual(deck.hand, .highCard(Card("3♦️")))
     }
 
 }

@@ -57,4 +57,10 @@ final class CardTests: XCTestCase {
         XCTAssertTrue(Card.compare(hand1, >, hand2))
     }
     
+    func testRoyalFlushOverPairShouldWin() {
+        let hand1 = Card.array("A♦️ K♦️ Q♦️ J♦️ 7♠️ 10♦️ 8♥️")
+        let hand2 = Card.array("A♦️ 2♠️ 4♥️ 6♣️ 8♠️ 10♦️ 2♥️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, >, hand2))
+    }
 }

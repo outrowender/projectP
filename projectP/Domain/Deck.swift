@@ -70,53 +70,47 @@ struct Deck: Comparable {
         return .highCard(cards.first!)
     }
     
-//    public func handStrenght(for players: Int) {
-//        var remainings: [Card] = []
-//
-//        for rank in Card.Rank.allCases {
-//            for suit in Card.Suit.allCases {
-//                let card = Card(rank, suit)
-//                if self.cards.contains(where: { $0 == card }) { continue }
-//                remainings.append(card)
-//            }
-//        }
-//
-//        let ourRank = self.hand
-//
-//        for oppCards in generateOpponentCardCombinations(remainingCards: remainings, players: players - 1) {
-//            let oppRank = calculateRank(cards: oppCards)
-//
-//            if ourRank > oppRank {
-//                ahead += 1
-//            } else if ourRank == oppRank {
-//                tied += 1
-//            } else {
-//                behind += 1
-//            }
-//        }
-//
-//
-//    }
-    
-    private func generateOpponentCardCombinations(remainingCards: [Card], players: Int) -> [[Card]] {
-        var combinations: [[Card]] = []
-        let numCards = remainingCards.count
-        
-        // Generate combinations recursively
-        func generateCombination(index: Int, currentCombination: [Card]) {
-            if currentCombination.count == players {
-                combinations.append(currentCombination)
-                return
-            }
-            
-            for i in index..<numCards {
-                var newCombination = currentCombination
-                newCombination.append(remainingCards[i])
-                generateCombination(index: i + 1, currentCombination: newCombination)
+    var strength: Double {
+        var remainings: [Card] = []
+
+        for rank in Card.Rank.allCases {
+            for suit in Card.Suit.allCases {
+                let card = Card(rank, suit)
+                if self.all.contains(where: { $0 == card }) { continue }
+                remainings.append(card)
             }
         }
+
+        var ahead = 0, tied = 0, behind = 0
+
+        let oppCombinations: [[Card]] = generateOpponentCardCombinations(remainingCards: remainings)
         
-        generateCombination(index: 0, currentCombination: [])
+        let ourRank = self.hand!
+        for oppCards in oppCombinations {
+            let oppRank = compute(oppCards + self.table)
+
+            if ourRank > oppRank {
+                ahead += 1
+            } else if ourRank == oppRank {
+                tied += 1
+            } else {
+                behind += 1
+            }
+        }
+
+        let handStrength = (Double(ahead) + Double(tied) / 2) / Double(ahead + tied + behind)
+        return handStrength
+    }
+    
+    private func generateOpponentCardCombinations(remainingCards: [Card]) -> [[Card]] {
+        var combinations: [[Card]] = []
+        
+        for i in 0..<remainingCards.count {
+            for j in (i + 1)..<remainingCards.count {
+                let combination = [remainingCards[i], remainingCards[j]]
+                combinations.append(combination)
+            }
+        }
         
         return combinations
     }
@@ -303,7 +297,61 @@ extension Deck {
             case (.royalFlush(let lcards), .royalFlush(let rcards)):
                 return Card.compare(lcards, <, rcards)
             default:
-                return false
+                return lhs.ranking < rhs.ranking
+            }
+        }
+        
+        static func > (lhs: Deck.Hand, rhs: Deck.Hand) -> Bool {
+            switch (lhs, rhs) {
+            case (.highCard(let lcard), .highCard(let rcard)):
+                return lcard > rcard
+            case (.pair(let lcards), .pair(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.twoPairs(let lcards), .twoPairs(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.threeOfAKind(let lcards), .threeOfAKind(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.straight(let lcards), .straight(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.flush(let lcards), .flush(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.fullHouse(let lcards), .fullHouse(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.fourOfAKind(let lcards), .fourOfAKind(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.straightFlush(let lcards), .straightFlush(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            case (.royalFlush(let lcards), .royalFlush(let rcards)):
+                return Card.compare(lcards, >, rcards)
+            default:
+                return lhs.ranking > rhs.ranking
+            }
+        }
+        
+        static func == (lhs: Deck.Hand, rhs: Deck.Hand) -> Bool {
+            switch (lhs, rhs) {
+            case (.highCard(let lcard), .highCard(let rcard)):
+                return lcard == rcard
+            case (.pair(let lcards), .pair(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.twoPairs(let lcards), .twoPairs(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.threeOfAKind(let lcards), .threeOfAKind(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.straight(let lcards), .straight(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.flush(let lcards), .flush(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.fullHouse(let lcards), .fullHouse(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.fourOfAKind(let lcards), .fourOfAKind(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.straightFlush(let lcards), .straightFlush(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            case (.royalFlush(let lcards), .royalFlush(let rcards)):
+                return Card.compare(lcards, ==, rcards)
+            default:
+                return lhs.ranking == rhs.ranking
             }
         }
     }
