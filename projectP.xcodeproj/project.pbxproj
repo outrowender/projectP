@@ -18,6 +18,7 @@
 		2A54A12B2A54B6380066B5C4 /* DeckComputeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */; };
 		2A54A12D2A55046C0066B5C4 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12C2A55046C0066B5C4 /* Deck.swift */; };
 		2A54A12F2A55122F0066B5C4 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12E2A55122F0066B5C4 /* CardTests.swift */; };
+		2A8F854A2A585F53003B4828 /* DeckHandComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckComputeTests.swift; sourceTree = "<group>"; };
 		2A54A12C2A55046C0066B5C4 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		2A54A12E2A55122F0066B5C4 /* CardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
+		2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckHandComparisonTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			children = (
 				2A54A12E2A55122F0066B5C4 /* CardTests.swift */,
 				2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */,
+				2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A8F854A2A585F53003B4828 /* DeckHandComparisonTests.swift in Sources */,
 				2A54A12F2A55122F0066B5C4 /* CardTests.swift in Sources */,
 				2A54A10E2A54B5500066B5C4 /* projectPTests.swift in Sources */,
 				2A54A12B2A54B6380066B5C4 /* DeckComputeTests.swift in Sources */,

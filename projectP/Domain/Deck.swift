@@ -10,67 +10,130 @@ import Foundation
 // MARK: - Deck logic
 struct Deck: Comparable {
     
-    let cards: [Card]
-    private(set) var hand: Hand?
+    let all: [Card]
+    let table: [Card]
+    let ours: [Card]
+    private(set) var hand: Hand!
     
-    init(_ cards: [Card]) {
-        self.cards = cards.sorted { $0 > $1 }
-        self.hand = compute()
+    init(_ table: [Card], ours: [Card]) {
+        self.table = table
+        self.ours = ours
+        self.all = (table + ours).sorted { $0 > $1 }
+        self.hand = compute(self.all)
     }
     
-    init(_ literal: String) {
-        let literalArray = literal.components(separatedBy: " ").map { Card($0) }
-        self.init(literalArray)
+    init(_ table: String?, ours: String) {
+        let literalTable: [Card] = table == nil ? [] : table!.components(separatedBy: " ").map { Card($0) }
+        let literalOurs = ours.components(separatedBy: " ").map { Card($0) }
+        self.init(literalTable, ours: literalOurs)
     }
     
     // MARK: - Compute logic
-    private func compute() -> Hand {
+    private func compute(_ cards: [Card]) -> Hand {
         
-        if let match = isRoyalFlush() {
+        if let match = isRoyalFlush(cards) {
             return .royalFlush(match)
         }
         
-        if let match = isStraightFlush() {
+        if let match = isStraightFlush(cards) {
             return .straightFlush(match)
         }
         
-        if let match = isKind(of: 4) {
+        if let match = isKind(of: 4, for: cards) {
             return .fourOfAKind(match)
         }
         
-        if let match = isFullHouse() {
+        if let match = isFullHouse(cards) {
             return .fullHouse(match)
         }
         
-        if let match = isFlush() {
+        if let match = isFlush(cards) {
             return .flush(match)
         }
         
-        if let match = isStraight() {
+        if let match = isStraight(cards) {
             return .straight(match)
         }
         
-        if let match = isKind(of: 3) {
+        if let match = isKind(of: 3, for: cards) {
             return .threeOfAKind(match)
         }
         
-        if let match = isTwoPairs() {
+        if let match = isTwoPairs(cards) {
             return .twoPairs(match)
         }
         
-        if let match = isKind(of: 2) {
+        if let match = isKind(of: 2, for: cards) {
             return .pair(match)
         }
         
         return .highCard(cards.first!)
     }
+    
+//    public func handStrenght(for players: Int) {
+//        var remainings: [Card] = []
+//
+//        for rank in Card.Rank.allCases {
+//            for suit in Card.Suit.allCases {
+//                let card = Card(rank, suit)
+//                if self.cards.contains(where: { $0 == card }) { continue }
+//                remainings.append(card)
+//            }
+//        }
+//
+//        let ourRank = self.hand
+//
+//        for oppCards in generateOpponentCardCombinations(remainingCards: remainings, players: players - 1) {
+//            let oppRank = calculateRank(cards: oppCards)
+//
+//            if ourRank > oppRank {
+//                ahead += 1
+//            } else if ourRank == oppRank {
+//                tied += 1
+//            } else {
+//                behind += 1
+//            }
+//        }
+//
+//
+//    }
+    
+    private func generateOpponentCardCombinations(remainingCards: [Card], players: Int) -> [[Card]] {
+        var combinations: [[Card]] = []
+        let numCards = remainingCards.count
+        
+        // Generate combinations recursively
+        func generateCombination(index: Int, currentCombination: [Card]) {
+            if currentCombination.count == players {
+                combinations.append(currentCombination)
+                return
+            }
+            
+            for i in index..<numCards {
+                var newCombination = currentCombination
+                newCombination.append(remainingCards[i])
+                generateCombination(index: i + 1, currentCombination: newCombination)
+            }
+        }
+        
+        generateCombination(index: 0, currentCombination: [])
+        
+        return combinations
+    }
+    
+    static func bestHands(_ hands: [Hand]) -> Hand? {
+        
+        if let hand = hands.max(by: { $0.ranking < $1.ranking }) {
+            return hand
+        }
+        
+        return nil
+    }
 }
  
 extension Deck {
     // Check if N cards are on the same kind
-    private func isKind(of n: Int, from: [Card]? = nil) -> [Card]? {
-        let cards = from ?? self.cards
-        
+    private func isKind(of n: Int, for cards: [Card]) -> [Card]? {
         var count = [Card.Rank: [Card]]()
         
         for card in cards {
@@ -83,7 +146,7 @@ extension Deck {
     }
     
     // Check if two pairs of same kind exists
-    private func isTwoPairs() -> [Card]? {
+    private func isTwoPairs(_ cards: [Card]) -> [Card]? {
         var count = [Card.Rank: [Card]]()
         
         for card in cards {
@@ -101,24 +164,24 @@ extension Deck {
     }
     
     // Check if cards in a sequence, but not of the same suit
-    private func isStraight() -> [Card]? {
-        let sequence = rankSequence()
+    private func isStraight(_ cards: [Card]) -> [Card]? {
+        let sequence = rankSequence(cards)
         if sequence.count < 5 { return nil }
         
         return Array(sequence[0..<5])
     }
     
     // Any five cards of the same suit, but not in a sequence
-    private func isFlush() -> [Card]? {
-        let sequence = suitSequence()
+    private func isFlush(_ cards: [Card]) -> [Card]? {
+        let sequence = suitSequence(cards)
         if sequence.count < 5 { return nil }
         
         return Array(sequence[0..<5])
     }
     
     // Five cards in a sequence, all in the same suit
-    private func isStraightFlush() -> [Card]? {
-        let ranks = rankSequence()
+    private func isStraightFlush(_ cards: [Card]) -> [Card]? {
+        let ranks = rankSequence(cards)
         if ranks.count < 5 { return nil }
         let sequence = suitSequence(ranks)
         if sequence.count < 5 { return nil }
@@ -127,29 +190,27 @@ extension Deck {
     }
     
     // Three of a kind with a pair
-    private func isFullHouse() -> [Card]? {
-        guard let three = isKind(of: 3) else { return nil }
+    private func isFullHouse(_ cards: [Card]) -> [Card]? {
+        guard let three = isKind(of: 3, for: cards) else { return nil }
         let remaining = cards.filter { !three.contains($0) }
-        guard let pair = isKind(of: 2, from: remaining) else { return nil }
+        guard let pair = isKind(of: 2, for: remaining) else { return nil }
         
         return three + pair
     }
     
     // A, K, Q, J, 10, all the same suit
-    private func isRoyalFlush() -> [Card]? {
-        guard let straightFlush = isStraightFlush() else { return nil }
+    private func isRoyalFlush(_ cards: [Card]) -> [Card]? {
+        guard let straightFlush = isStraightFlush(cards) else { return nil }
         if straightFlush.first?.rank != .ace { return nil }
         
         return straightFlush
     }
     
     // How many cards are in sequence by suits [.club, .club, .club, ...]
-    private func suitSequence(_ from: [Card]? = nil) -> [Card] {
-        let cards = from ?? self.cards
-        
+    private func suitSequence(_ from: [Card]) -> [Card] {
         var sequence: [Card.Suit: Int8] = [:]
         
-        for card in cards {
+        for card in from {
             sequence[card.suit, default: 0] += 1
         }
 
@@ -165,11 +226,11 @@ extension Deck {
         
         guard let maxSuit else { return [] }
         
-        return cards.filter { $0.suit == maxSuit }.sorted { $0 > $1 }
+        return from.filter { $0.suit == maxSuit }.sorted { $0 > $1 }
     }
     
     // How many cards are in sequence by ranks [9, 8, 7, ...]
-    private func rankSequence() -> [Card] {
+    private func rankSequence(_ cards: [Card]) -> [Card] {
         var sequence = [Card]()
         
         for i in 1..<cards.count {

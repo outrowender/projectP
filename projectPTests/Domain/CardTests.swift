@@ -29,4 +29,32 @@ final class CardTests: XCTestCase {
         XCTAssertTrue(Card.compare(hand1, >, hand2))
     }
     
+    func testTwoPairGreaterPairsShouldWin() {
+        let hand1 = Card.array("J♣️ J♥️ 6♥️ 6♣️")
+        let hand2 = Card.array("J♠️ J♦️ 5♣️ 5♥️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, >, hand2))
+    }
+    
+    func testTwoPairGreaterPairsSuitShouldWin() {
+        let hand1 = Card.array("J♥️ J♦️ 6♥️ 6♠️")
+        let hand2 = Card.array("J♠️ J♣️ 6♦️ 6♣️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, >, hand2))
+    }
+    
+    func testTwoPairEqualsPairsSuitShouldTie() {
+        let hand1 = Card.array("J♣️ J♦️ 6♥️ 6♠️")
+        let hand2 = Card.array("J♠️ J♥️ 6♦️ 6♣️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, ==, hand2))
+    }
+    
+    func test3KindGreaterCardsShouldWin() {
+        let hand1 = Card.array("J♣️ J♦️ J♥️")
+        let hand2 = Card.array("10♠️ 10♥️ 10♦️")
+        // Assert
+        XCTAssertTrue(Card.compare(hand1, >, hand2))
+    }
+    
 }

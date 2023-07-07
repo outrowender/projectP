@@ -29,8 +29,15 @@ struct Card: Comparable, CustomStringConvertible {
     }
     
     static func compare(_ lhs: [Card], _ operation: (Int, Int) -> Bool, _ rhs: [Card]) -> Bool {
-        let leftCards = lhs.map { $0.rank.rawValue + $0.suit.rawValue }.reduce(0, +)
-        let rightCards = rhs.map { $0.rank.rawValue + $0.suit.rawValue }.reduce(0, +)
+        var leftCards = lhs.map { $0.rank.rawValue }.reduce(0, +)
+        var rightCards = rhs.map { $0.rank.rawValue }.reduce(0, +)
+        if leftCards != rightCards {
+            return operation(leftCards, rightCards)
+        }
+        
+        leftCards += lhs.map { $0.suit.rawValue }.reduce(0, +)
+        rightCards += rhs.map { $0.suit.rawValue }.reduce(0, +)
+        
         return operation(leftCards, rightCards)
     }
     
@@ -54,7 +61,7 @@ struct Card: Comparable, CustomStringConvertible {
 extension Card {
     // MARK: - Rank logic
     
-    enum Rank: Int, Comparable, CustomStringConvertible {
+    enum Rank: Int, CaseIterable, Comparable, CustomStringConvertible {
         case two = 1, three = 2, four = 4, five = 8, six = 16, seven = 32, eight = 64, nine = 128, ten = 256, jack = 512, queen = 1024, king = 2048, ace = 4096
         
         init?(_ value: String) {
@@ -81,7 +88,7 @@ extension Card {
 extension Card {
     // MARK: - Suit logic
     
-    enum Suit: Int, Comparable, CustomStringConvertible {
+    enum Suit: Int, CaseIterable, Comparable, CustomStringConvertible {
         case spade = 65536, heart = 32768, club = 16384, diamond = 8192
         
         init?(_ value: String) {
