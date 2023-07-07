@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "054D718D-6031-4D94-9050-1B3CCD7ED73D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random",
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:projectP.xcodeproj",
+        "identifier" : "2A54A1082A54B5500066B5C4",
+        "name" : "projectPTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A54A0FC2A54B54F0066B5C4 /* projectPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A0FB2A54B54F0066B5C4 /* projectPApp.swift */; };
+		2A54A0FC2A54B54F0066B5C4 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A0FB2A54B54F0066B5C4 /* MainApp.swift */; };
 		2A54A0FE2A54B54F0066B5C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A0FD2A54B54F0066B5C4 /* ContentView.swift */; };
 		2A54A1002A54B5500066B5C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A54A0FF2A54B5500066B5C4 /* Assets.xcassets */; };
 		2A54A1042A54B5500066B5C4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A54A1032A54B5500066B5C4 /* Preview Assets.xcassets */; };
 		2A54A10E2A54B5500066B5C4 /* projectPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A10D2A54B5500066B5C4 /* projectPTests.swift */; };
 		2A54A1182A54B5500066B5C4 /* projectPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A1172A54B5500066B5C4 /* projectPUITests.swift */; };
 		2A54A11A2A54B5500066B5C4 /* projectPUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A1192A54B5500066B5C4 /* projectPUITestsLaunchTests.swift */; };
+		2A54A1282A54B5FF0066B5C4 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A1272A54B5FF0066B5C4 /* Card.swift */; };
+		2A54A12B2A54B6380066B5C4 /* DeckComputeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */; };
+		2A54A12D2A55046C0066B5C4 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12C2A55046C0066B5C4 /* Deck.swift */; };
+		2A54A12F2A55122F0066B5C4 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12E2A55122F0066B5C4 /* CardTests.swift */; };
+		2AA2727F2A576BE600AD696C /* DeckHandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA2727E2A576BE600AD696C /* DeckHandTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A004B8B2A566C1600FF37F4 /* projectPTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = projectPTests.xctestplan; sourceTree = "<group>"; };
 		2A54A0F82A54B54F0066B5C4 /* projectP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = projectP.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A54A0FB2A54B54F0066B5C4 /* projectPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectPApp.swift; sourceTree = "<group>"; };
+		2A54A0FB2A54B54F0066B5C4 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
 		2A54A0FD2A54B54F0066B5C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A54A0FF2A54B5500066B5C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A54A1012A54B5500066B5C4 /* projectP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = projectP.entitlements; sourceTree = "<group>"; };
@@ -45,6 +51,11 @@
 		2A54A1132A54B5500066B5C4 /* projectPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = projectPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A54A1172A54B5500066B5C4 /* projectPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectPUITests.swift; sourceTree = "<group>"; };
 		2A54A1192A54B5500066B5C4 /* projectPUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = projectPUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2A54A1272A54B5FF0066B5C4 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckComputeTests.swift; sourceTree = "<group>"; };
+		2A54A12C2A55046C0066B5C4 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		2A54A12E2A55122F0066B5C4 /* CardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
+		2AA2727E2A576BE600AD696C /* DeckHandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckHandTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +106,8 @@
 		2A54A0FA2A54B54F0066B5C4 /* projectP */ = {
 			isa = PBXGroup;
 			children = (
-				2A54A0FB2A54B54F0066B5C4 /* projectPApp.swift */,
+				2A54A1262A54B5EE0066B5C4 /* Domain */,
+				2A54A0FB2A54B54F0066B5C4 /* MainApp.swift */,
 				2A54A0FD2A54B54F0066B5C4 /* ContentView.swift */,
 				2A54A0FF2A54B5500066B5C4 /* Assets.xcassets */,
 				2A54A1012A54B5500066B5C4 /* projectP.entitlements */,
@@ -115,6 +127,8 @@
 		2A54A10C2A54B5500066B5C4 /* projectPTests */ = {
 			isa = PBXGroup;
 			children = (
+				2A004B8B2A566C1600FF37F4 /* projectPTests.xctestplan */,
+				2A54A1292A54B61F0066B5C4 /* Domain */,
 				2A54A10D2A54B5500066B5C4 /* projectPTests.swift */,
 			);
 			path = projectPTests;
@@ -127,6 +141,25 @@
 				2A54A1192A54B5500066B5C4 /* projectPUITestsLaunchTests.swift */,
 			);
 			path = projectPUITests;
+			sourceTree = "<group>";
+		};
+		2A54A1262A54B5EE0066B5C4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2A54A1272A54B5FF0066B5C4 /* Card.swift */,
+				2A54A12C2A55046C0066B5C4 /* Deck.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		2A54A1292A54B61F0066B5C4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2A54A12E2A55122F0066B5C4 /* CardTests.swift */,
+				2A54A12A2A54B6380066B5C4 /* DeckComputeTests.swift */,
+				2AA2727E2A576BE600AD696C /* DeckHandTests.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +292,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A54A12D2A55046C0066B5C4 /* Deck.swift in Sources */,
 				2A54A0FE2A54B54F0066B5C4 /* ContentView.swift in Sources */,
-				2A54A0FC2A54B54F0066B5C4 /* projectPApp.swift in Sources */,
+				2A54A1282A54B5FF0066B5C4 /* Card.swift in Sources */,
+				2A54A0FC2A54B54F0066B5C4 /* MainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +303,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A54A12F2A55122F0066B5C4 /* CardTests.swift in Sources */,
 				2A54A10E2A54B5500066B5C4 /* projectPTests.swift in Sources */,
+				2A54A12B2A54B6380066B5C4 /* DeckComputeTests.swift in Sources */,
+				2AA2727F2A576BE600AD696C /* DeckHandTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +457,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.card-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -457,6 +496,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.card-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
