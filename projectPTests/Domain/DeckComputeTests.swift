@@ -15,8 +15,8 @@ final class DeckComputeTests: XCTestCase {
         // Arrange/Act
         let deck = Deck("A♦️ K♦️ Q♦️ J♦️ 7♠️", ours: "10♦️ 8♥️")
         // Assert
-        XCTAssertEqual(deck.strength, 1)
         XCTAssertEqual(deck.hand, .royalFlush(Card.array("A♦️ K♦️ Q♦️ J♦️ 10♦️")))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeHandOf7ShouldReturnARoyalFlush() {
@@ -25,6 +25,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♦️ K♦️ Q♦️ J♦️ 10♦️")
         XCTAssertEqual(deck.hand, .royalFlush(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeHandOf5ShouldReturnARoyalFlush() {
@@ -33,6 +34,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♦️ K♦️ Q♦️ J♦️ 10♦️")
         XCTAssertEqual(deck.hand, .royalFlush(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     // MARK: - Straight flush tests
@@ -42,6 +44,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("8♣️ 7♣️ 6♣️ 5♣️ 4♣️")
         XCTAssertEqual(deck.hand, .straightFlush(expected))
+        XCTAssertEqual(deck.strength, 0.98)
     }
     
     func testComputeHandOf7ShouldReturnAStraightFlush() {
@@ -50,6 +53,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("8♣️ 7♣️ 6♣️ 5♣️ 4♣️")
         XCTAssertEqual(deck.hand, .straightFlush(expected))
+        XCTAssertEqual(deck.strength, 0.49)
     }
     
     // MARK: - 4 of a kind tests
@@ -59,6 +63,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("J♠️ J♥️ J♣️ J♦️")
         XCTAssertEqual(deck.hand, .fourOfAKind(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeHandOf4ShouldReturnAFourOfAKind() {
@@ -67,16 +72,18 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("J♠️ J♥️ J♣️ J♦️")
         XCTAssertEqual(deck.hand, .fourOfAKind(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     // MARK: - Full House tests
     func testComputeHandOf7ShouldReturnAFullHouse() {
         // Arrange/Act
-        let deck = Deck("10♣️ 10♦️ 9♥️ 10♠️ 9♦️", ours: "2♠️ K♦️")
+        let deck = Deck("10♣️ 10♦️ 9♥️ 10♠️ K♦️", ours: "9♦️ 2♠️")
         // Assert
         let expectedTrio = Card.array("10♠️ 10♣️ 10♦️")
         let expectedDuo = Card.array("9♥️ 9♦️")
         XCTAssertEqual(deck.hand, .fullHouse(expectedTrio + expectedDuo))
+        XCTAssertEqual(deck.strength, 0.74)
     }
     
     func testComputeHandOf5ShouldReturnAFullHouse() {
@@ -86,6 +93,7 @@ final class DeckComputeTests: XCTestCase {
         let expectedTrio = Card.array("10♠️ 10♣️ 10♦️")
         let expectedDuo = Card.array("9♥️ 9♦️")
         XCTAssertEqual(deck.hand, .fullHouse(expectedTrio + expectedDuo))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     // MARK: - Flush tests
@@ -95,6 +103,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("J♠️ 9♠️ 8♠️ 5♠️ 2♠️")
         XCTAssertEqual(deck.hand, .flush(expected))
+        XCTAssertEqual(deck.strength, 0.8)
     }
     
     func testComputeHandOf7ShouldReturnAFlush() {
@@ -103,6 +112,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♠️ K♠️ J♠️ 9♠️ 8♠️")
         XCTAssertEqual(deck.hand, .flush(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeHandOf5ShouldReturnAFlush() {
@@ -111,6 +121,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("J♠️ 9♠️ 8♠️ 5♠️ 2♠️")
         XCTAssertEqual(deck.hand, .flush(expected))
+        XCTAssertEqual(deck.strength, 0.98)
     }
     
     func testComputeFullHandShouldReturnAFlushIfThereIsBiggerCards() {
@@ -119,6 +130,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("J♠️ 9♠️ 8♠️ 5♠️ 2♠️")
         XCTAssertEqual(deck.hand, .flush(expected))
+        XCTAssertEqual(deck.strength, 0.8)
     }
     
     // MARK: - Straight tests
@@ -128,6 +140,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("9♣️ 8♦️ 7♥️ 6♥️ 5♠️")
         XCTAssertEqual(deck.hand, .straight(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeFullHandOf7ShouldReturnAStraight() {
@@ -136,6 +149,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("9♣️ 8♦️ 7♥️ 6♥️ 5♠️")
         XCTAssertEqual(deck.hand, .straight(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeFullHandOf7BigSequenceShouldReturnAStraight() {
@@ -144,6 +158,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("9♣️ 8♦️ 7♥️ 6♥️ 5♠️")
         XCTAssertEqual(deck.hand, .straight(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
 
     // MARK: - 3 of a kind tests
@@ -153,6 +168,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("7♠️ 7♥️ 7♣️")
         XCTAssertEqual(deck.hand, .threeOfAKind(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeHandOf3ShouldReturnAThreeOfAKind() {
@@ -161,6 +177,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("7♠️ 7♥️ 7♣️")
         XCTAssertEqual(deck.hand, .threeOfAKind(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     // MARK: - Two pairs tests
@@ -171,6 +188,7 @@ final class DeckComputeTests: XCTestCase {
         let pair1 = Card.array("4♠️ 4♣️")
         let pair2 = Card.array("3♥️ 3♦️")
         XCTAssertEqual(deck.hand, .twoPairs(pair1 + pair2))
+        XCTAssertEqual(deck.strength, 0.34)
     }
     
     func testComputeHandOf4ShouldReturnATwoPairs() {
@@ -180,6 +198,7 @@ final class DeckComputeTests: XCTestCase {
         let pair1 = Card.array("4♠️ 4♣️")
         let pair2 = Card.array("3♥️ 3♦️")
         XCTAssertEqual(deck.hand, .twoPairs(pair1 + pair2))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     // MARK: - Pair tests
@@ -189,6 +208,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♥️ A♦️")
         XCTAssertEqual(deck.hand, .pair(expected))
+        XCTAssertEqual(deck.strength, 1.0)
     }
     
     func testComputeFullHandOf3ShouldReturnAPair() {
@@ -197,6 +217,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♥️ A♦️")
         XCTAssertEqual(deck.hand, .pair(expected))
+        XCTAssertEqual(deck.strength, 0.92)
     }
     
     func testComputeFullHandShouldReturnAPair() {
@@ -205,6 +226,7 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card.array("A♥️ A♦️")
         XCTAssertEqual(deck.hand, .pair(expected))
+        XCTAssertEqual(deck.strength, 0.85)
     }
     
     // MARK: - High card tests
@@ -214,14 +236,15 @@ final class DeckComputeTests: XCTestCase {
         // Assert
         let expected = Card("K♥️")
         XCTAssertEqual(deck.hand, .highCard(expected))
+        XCTAssertEqual(deck.strength, 0.4)
     }
     
     func testComputeFullHandOf2ShouldReturnAHighCard() {
         // Arrange/Act
         let deck = Deck(nil, ours: "2♥️ 3♦️")
         // Assert
-        XCTAssertEqual(deck.strength, 0.11510204081632654)
         XCTAssertEqual(deck.hand, .highCard(Card("3♦️")))
+        XCTAssertEqual(deck.strength, 0.12)
     }
 
 }

@@ -99,7 +99,7 @@ struct Deck: Comparable {
         }
 
         let handStrength = (Double(ahead) + Double(tied) / 2) / Double(ahead + tied + behind)
-        return handStrength
+        return handStrength.rounded(toPlaces: 2)
     }
     
     private func generateOpponentCardCombinations(remainingCards: [Card]) -> [[Card]] {

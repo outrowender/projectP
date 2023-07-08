@@ -19,6 +19,7 @@
 		2A54A12D2A55046C0066B5C4 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12C2A55046C0066B5C4 /* Deck.swift */; };
 		2A54A12F2A55122F0066B5C4 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54A12E2A55122F0066B5C4 /* CardTests.swift */; };
 		2A8F854A2A585F53003B4828 /* DeckHandComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */; };
+		2AC0DCC52A598BC900866047 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0DCC42A598BC900866047 /* Double.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		2A54A12C2A55046C0066B5C4 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		2A54A12E2A55122F0066B5C4 /* CardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
 		2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckHandComparisonTests.swift; sourceTree = "<group>"; };
+		2AC0DCC42A598BC900866047 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		2A54A0FA2A54B54F0066B5C4 /* projectP */ = {
 			isa = PBXGroup;
 			children = (
+				2AC0DCC32A598BB900866047 /* Extensions */,
 				2A54A1262A54B5EE0066B5C4 /* Domain */,
 				2A54A0FB2A54B54F0066B5C4 /* MainApp.swift */,
 				2A54A0FD2A54B54F0066B5C4 /* ContentView.swift */,
@@ -160,6 +163,14 @@
 				2A8F85492A585F53003B4828 /* DeckHandComparisonTests.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		2AC0DCC32A598BB900866047 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2AC0DCC42A598BC900866047 /* Double.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +306,7 @@
 				2A54A12D2A55046C0066B5C4 /* Deck.swift in Sources */,
 				2A54A0FE2A54B54F0066B5C4 /* ContentView.swift in Sources */,
 				2A54A1282A54B5FF0066B5C4 /* Card.swift in Sources */,
+				2AC0DCC52A598BC900866047 /* Double.swift in Sources */,
 				2A54A0FC2A54B54F0066B5C4 /* MainApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
