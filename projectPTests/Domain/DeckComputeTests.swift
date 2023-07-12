@@ -160,6 +160,24 @@ final class DeckComputeTests: XCTestCase {
         XCTAssertEqual(deck.hand, .straight(expected))
         XCTAssertEqual(deck.strength, 1.0)
     }
+    
+    func testComputeBreakStraightShouldReturnAStraight() {
+        // Arrange/Act
+        let deck = Deck("A♠️ K♦️ 9♦️ 6♣️ 5♦️", ours: "7♠️ 8♣️")
+        // Assert
+        let expected = Card.array("9♦️ 8♣️ 7♠️ 6♣️ 5♦️")
+        XCTAssertEqual(deck.hand, .straight(expected))
+        XCTAssertEqual(deck.strength, 0.96)
+    }
+    
+    func testComputeBreakStraightWithSmallEndingShouldReturnAStraight() {
+        // Arrange/Act
+        let deck = Deck("7♠️ 8♦️ 9♦️ 3♣️ 5♦️", ours: "2♠️ 6♣️")
+        // Assert
+        let expected = Card.array("9♦️ 8♦️ 7♠️ 6♣️ 5♦️")
+        XCTAssertEqual(deck.hand, .straight(expected))
+        XCTAssertEqual(deck.strength, 0.96)
+    }
 
     // MARK: - 3 of a kind tests
     func testComputeFullHandShouldReturnAThreeOfAKind() {

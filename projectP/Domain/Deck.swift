@@ -73,7 +73,7 @@ struct Deck: Comparable {
     var strength: Double {
         var remainings: [Card] = []
 
-        for rank in Card.Rank.allCases {
+        for rank in Card.Rank.allCases { // TODO: revisit this to use .full
             for suit in Card.Suit.allCases {
                 let card = Card(rank, suit)
                 if self.all.contains(where: { $0 == card }) { continue }
@@ -122,6 +122,16 @@ struct Deck: Comparable {
         }
         
         return nil
+    }
+    
+    static var full: [Card] {
+        var fullDeck: [Card] = []
+        for rank in Card.Rank.allCases {
+            for suit in Card.Suit.allCases {
+                fullDeck.append(Card(rank, suit))
+            }
+        }
+        return fullDeck
     }
 }
  
@@ -225,18 +235,31 @@ extension Deck {
     
     // How many cards are in sequence by ranks [9, 8, 7, ...]
     private func rankSequence(_ cards: [Card]) -> [Card] {
-        var sequence = [Card]()
+        var sequence = [[Card]]()
         
         for i in 1..<cards.count {
-            if cards[i-1].rank.rawValue == (cards[i].rank.rawValue * 2) {
+            if cards[i-1].rank.int == cards[i].rank.int + 1 {
+                let sc = sequence.count == 0 ? 0 : sequence.count - 1
+                
                 if sequence.isEmpty {
-                    sequence.append(cards[i-1])
+                    sequence.append([])
                 }
-                sequence.append(cards[i])
+                
+                if sequence[sc].isEmpty {
+                    sequence[sc].append(cards[i-1])
+                }
+                
+                sequence[sc].append(cards[i])
+            } else {
+                sequence.append([])
             }
         }
         
-        return sequence.sorted { $0 > $1 }
+        if let max = sequence.max(by: { $0.count < $1.count }) {
+            return max.sorted { $0 > $1 }
+        }
+        
+        return []
     }
     
     public static func < (lhs: Deck, rhs: Deck) -> Bool {
