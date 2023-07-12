@@ -13,28 +13,25 @@ class Table {
     private(set) var deck = Deck.full
     
     private(set) var round = 0
+    private(set) var playerIndex = 0
     
     init(players: [Player]) {
         self.players = players
     }
-    
-    func randomCard() -> Card {
-        let cardIndex = Int.random(in: 0..<deck.count)
-        let copy = deck[cardIndex]
-        deck.remove(at: cardIndex)
-        return copy
-    }
-    
-    func feedDealerHands(with cards: Int) {
-        for _ in 1...cards {
-            let card = randomCard()
-            dealer.append(card)
-        }
-    }
-    
+ 
     func startGame() {
         feedPlayersHands()
         round = 1
+    }
+    
+    func takeTurn() -> Player {
+        playerIndex = (playerIndex + 1) % players.count
+        
+        if playerIndex == 0 {
+            cycle()
+        }
+        
+        return players[playerIndex]
     }
     
     func cycle() {
@@ -47,6 +44,7 @@ class Table {
         }
         
         round += 1
+        playerIndex = 0
     }
     
     func winner() -> (Player, Deck.Hand) {
@@ -58,6 +56,20 @@ class Table {
         let deck = Deck(dealer, ours: p.hands)
         
         return (p, deck.hand)
+    }
+    
+    private func randomCard() -> Card {
+        let cardIndex = Int.random(in: 0..<deck.count)
+        let copy = deck[cardIndex]
+        deck.remove(at: cardIndex)
+        return copy
+    }
+    
+    private func feedDealerHands(with cards: Int) {
+        for _ in 1...cards {
+            let card = randomCard()
+            dealer.append(card)
+        }
     }
     
     private func feedPlayersHands() {
