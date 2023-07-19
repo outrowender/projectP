@@ -143,30 +143,76 @@ final class TableTests: XCTestCase {
     }
     
     
-//    func testPlayShouldIgnoreFolds() {
-//        poker.startGame()
-//
-//        poker.play(0, decision: .call) // 2
-//        poker.play(1, decision: .call) // 1
-//        poker.play(2, decision: .call) // 0
-//        XCTAssertEqual(poker.round, 2)
-//         
-//        poker.play(0, decision: .call) // 2
-//        poker.play(1, decision: .bet(amount: 10)) // 2
-//        poker.play(2, decision: .fold) // 1
-//        poker.play(0, decision: .call) // 0
-//        XCTAssertEqual(poker.round, 3)
-//
-//        poker.play(0, decision: .call) // 1
-//        poker.play(1, decision: .bet(amount: 10)) // 1
-//        poker.play(0, decision: .call) // 0
-//        XCTAssertEqual(poker.round, 4)
-//
-//
-//        XCTAssertEqual(poker.pot, 40)
-//        XCTAssertEqual(poker.bigPot, 20)
-//        XCTAssertEqual(poker.cards.count, 5)
-//
-//    }
+    func testPlayShouldIgnoreFolds() {
+        poker.startGame()
+
+        poker.play(0, decision: .call) // 2
+        poker.play(1, decision: .call) // 1
+        poker.play(2, decision: .call) // 0
+        XCTAssertEqual(poker.round, 2)
+
+        poker.play(0, decision: .call) // 2
+        poker.play(1, decision: .bet(amount: 10)) // 2
+        poker.play(2, decision: .fold) // 1
+        poker.play(0, decision: .call) // 0
+        XCTAssertEqual(poker.round, 3)
+
+        poker.play(0, decision: .call) // 1
+        poker.play(1, decision: .bet(amount: 10)) // 1
+        poker.play(0, decision: .call) // 0
+        XCTAssertEqual(poker.round, 4)
+
+
+        XCTAssertEqual(poker.pot, 40)
+        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.cards.count, 5)
+
+    }
+    
+    func testPlayShouldIgnoreFolds2() {
+        poker.startGame()
+
+        poker.play(0, decision: .call) // 2
+        poker.play(1, decision: .call) // 1
+        poker.play(2, decision: .call) // 0
+        XCTAssertEqual(poker.round, 2)
+
+        poker.play(0, decision: .fold) // 2
+        poker.play(1, decision: .bet(amount: 10)) // 1
+        poker.play(2, decision: .call) // 0
+        XCTAssertEqual(poker.round, 3)
+
+        poker.play(1, decision: .bet(amount: 10)) // 1
+        poker.play(2, decision: .call) // 0
+        XCTAssertEqual(poker.round, 4)
+
+        XCTAssertEqual(poker.pot, 40)
+        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.cards.count, 5)
+
+    }
+    
+    func testPlayShouldIgnoreFolds3() {
+        poker.startGame()
+
+        poker.play(0, decision: .call) // 2
+        poker.play(1, decision: .call) // 1
+        poker.play(2, decision: .fold) // 0
+        XCTAssertEqual(poker.round, 2)
+
+        poker.play(0, decision: .call) // 1
+        poker.play(1, decision: .bet(amount: 10)) // 1
+        poker.play(0, decision: .call) // 0
+        XCTAssertEqual(poker.round, 3)
+
+        poker.play(0, decision: .bet(amount: 10)) // 1
+        poker.play(1, decision: .call) // 0
+        XCTAssertEqual(poker.round, 4)
+
+        XCTAssertEqual(poker.pot, 40)
+        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.cards.count, 5)
+
+    }
 
 }
