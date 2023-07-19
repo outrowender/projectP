@@ -34,7 +34,7 @@ final class CardTests: XCTestCase {
         let hand2 = Card.array("Q♠️ J♥️")
         // Assert
         XCTAssertTrue(Card.compare(hand1, >, hand2))
-        XCTAssertEqual(Deck([], ours: hand1).strength, 0.95)
+        XCTAssertEqual(Deck([], ours: hand1).strength, 94)
     }
     
     func testTwoPairGreaterPairsShouldWin() {

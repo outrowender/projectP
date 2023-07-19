@@ -14,18 +14,18 @@ class AIPlayer {
         self.player = player
     }
     
-    func decide(table: [Card], pot: Int, opponents: Int) -> Decision {
+    func decide(table: [Card], pot: Int, opponents: Int) -> Player.Decision {
         let deck = Deck(table, ours: player.hands)
         
-        if deck.strength > 0.99 {
+        if deck.strength > 99 {
             return .bet(amount: player.credits)
         }
         
-        if deck.strength > 0.90 {
+        if deck.strength > 90 {
             return .bet(amount: player.credits/3)
         }
         
-        if deck.strength > 0.20 {
+        if deck.strength > 20 {
             return .call
         }
         
@@ -33,10 +33,3 @@ class AIPlayer {
     }
 }
 
-extension AIPlayer {
-    enum Decision: Equatable {
-        case fold
-        case call
-        case bet(amount: Int)
-    }
-}

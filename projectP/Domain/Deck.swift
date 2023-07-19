@@ -70,7 +70,7 @@ struct Deck: Comparable {
         return .highCard(cards.first!)
     }
     
-    var strength: Double {
+    var strength: Int {
         var remainings: [Card] = []
 
         for rank in Card.Rank.allCases { // TODO: revisit this to use .full
@@ -99,7 +99,7 @@ struct Deck: Comparable {
         }
 
         let handStrength = (Double(ahead) + Double(tied) / 2) / Double(ahead + tied + behind)
-        return handStrength.rounded(toPlaces: 2)
+        return Int(handStrength * 100)
     }
     
     private func generateOpponentCardCombinations(remainingCards: [Card]) -> [[Card]] {
@@ -267,115 +267,3 @@ extension Deck {
     }
 }
 
-extension Deck {
-    
-    enum Hand: Comparable {
-        
-        case highCard(Card),
-             pair([Card]),
-             twoPairs([Card]),
-             threeOfAKind([Card]),
-             straight([Card]),
-             flush([Card]),
-             fullHouse([Card]),
-             fourOfAKind([Card]),
-             straightFlush([Card]),
-             royalFlush([Card])
-        
-        var ranking: Int8 {
-            switch self {
-            case .highCard(_): return 1
-            case .pair(_): return 2
-            case .twoPairs(_): return 3
-            case .threeOfAKind(_): return 4
-            case .straight(_): return 5
-            case .flush(_): return 6
-            case .fullHouse(_): return 7
-            case .fourOfAKind(_): return 8
-            case .straightFlush(_): return 9
-            case .royalFlush(_): return 10
-            }
-        }
-        
-        static func < (lhs: Deck.Hand, rhs: Deck.Hand) -> Bool {
-            switch (lhs, rhs) {
-            case (.highCard(let lcard), .highCard(let rcard)):
-                return lcard < rcard
-            case (.pair(let lcards), .pair(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.twoPairs(let lcards), .twoPairs(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.threeOfAKind(let lcards), .threeOfAKind(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.straight(let lcards), .straight(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.flush(let lcards), .flush(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.fullHouse(let lcards), .fullHouse(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.fourOfAKind(let lcards), .fourOfAKind(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.straightFlush(let lcards), .straightFlush(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            case (.royalFlush(let lcards), .royalFlush(let rcards)):
-                return Card.compare(lcards, <, rcards)
-            default:
-                return lhs.ranking < rhs.ranking
-            }
-        }
-        
-        static func > (lhs: Deck.Hand, rhs: Deck.Hand) -> Bool {
-            switch (lhs, rhs) {
-            case (.highCard(let lcard), .highCard(let rcard)):
-                return lcard > rcard
-            case (.pair(let lcards), .pair(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.twoPairs(let lcards), .twoPairs(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.threeOfAKind(let lcards), .threeOfAKind(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.straight(let lcards), .straight(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.flush(let lcards), .flush(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.fullHouse(let lcards), .fullHouse(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.fourOfAKind(let lcards), .fourOfAKind(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.straightFlush(let lcards), .straightFlush(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            case (.royalFlush(let lcards), .royalFlush(let rcards)):
-                return Card.compare(lcards, >, rcards)
-            default:
-                return lhs.ranking > rhs.ranking
-            }
-        }
-        
-        static func == (lhs: Deck.Hand, rhs: Deck.Hand) -> Bool {
-            switch (lhs, rhs) {
-            case (.highCard(let lcard), .highCard(let rcard)):
-                return lcard == rcard
-            case (.pair(let lcards), .pair(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.twoPairs(let lcards), .twoPairs(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.threeOfAKind(let lcards), .threeOfAKind(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.straight(let lcards), .straight(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.flush(let lcards), .flush(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.fullHouse(let lcards), .fullHouse(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.fourOfAKind(let lcards), .fourOfAKind(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.straightFlush(let lcards), .straightFlush(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            case (.royalFlush(let lcards), .royalFlush(let rcards)):
-                return Card.compare(lcards, ==, rcards)
-            default:
-                return lhs.ranking == rhs.ranking
-            }
-        }
-    }
-}
