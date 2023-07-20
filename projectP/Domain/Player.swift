@@ -37,6 +37,11 @@ struct Player: Equatable {
         bet = 0
         return currentBet
     }
+    
+    mutating func reset() {
+        bet = 0
+        lastDecision = nil
+    }
 
     static func == (lhs: Player, rhs: Player) -> Bool {
         lhs.id == rhs.id

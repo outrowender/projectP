@@ -18,6 +18,8 @@ class Table {
     private(set) var pot = 0
     private(set) var bigPot = 0
     
+    private(set) var winner: Int?
+    
     init(players: [Player]) {
         self.players = players
     }
@@ -42,8 +44,19 @@ class Table {
     }
     
     func startGame() {
-        feedPlayersHands()
+        cards = []
+        deck = Deck.full
+        playerIndex = 0
         round = 1
+        pot = 0
+        bigPot = 0
+        winner = nil
+        
+        for p in 0..<players.count {
+            players[p].reset()
+        }
+        
+        feedPlayersHands()
     }
     
     func cycle() {
@@ -53,6 +66,17 @@ class Table {
         
         if round > 1 && round < 4 {
             feedTableCards(with: 1)
+        }
+        
+        if round == 5 {
+            let winner = checkWinner()
+            if let p = players.firstIndex(of: winner.0) {
+                finishGame(winner: p)
+            } else {
+                assert(false)
+            }
+           
+            return
         }
         
         round += 1
@@ -96,6 +120,7 @@ class Table {
     
     private func feedPlayersHands() {
         for p in 0..<players.count {
+            players[p].hands = []
             for _ in 0...1 {
                 let card = randomCard()
                 players[p].hands.append(card)
@@ -108,8 +133,8 @@ class Table {
 extension Table {
     private func decide(_ decision: Player.Decision) {
         switch decision {
-
-        case .fold: break
+        case .fold:
+            fold(player: playerIndex)
         case .call:
             call(player: playerIndex)
         case .bet(amount: let amount):
@@ -117,6 +142,18 @@ extension Table {
         case .allIn:
             allIn(player: playerIndex)
         }
+    }
+    
+    private func fold(player p: Int) {
+        let remaining = players.filter { $0.lastDecision != .fold }
+        
+        if remaining.count == 1 {
+            let p = players.firstIndex(of: remaining.first!)!
+            finishGame(winner: p)
+            return
+        }
+
+        self.refreshTableBet()
     }
     
     private func call(player p: Int) {
@@ -137,8 +174,14 @@ extension Table {
         bet(player: p, value: all)
     }
     
-    func winner() -> (Player, Deck.Hand) {
-        let all = players.map { Player(id: $0.id, hands: $0.hands + cards, credits: 0) }
+    private func finishGame(winner p: Int) {
+        winner = p
+        players[p].pay(pot)
+    }
+    
+    func checkWinner() -> (Player, Deck.Hand) {
+        let remaining = players.filter { $0.lastDecision != .fold }
+        let all = remaining.map { Player(id: $0.id, hands: $0.hands + cards, credits: $0.credits) } // TODO: rework remap
         
         let best = all.max { Card.compare($0.hands, >, $1.hands) }!
         let p = players.first { $0.id == best.id }!
