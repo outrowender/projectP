@@ -115,8 +115,8 @@ final class TableTests: XCTestCase {
         poker.play(2, decision: .call)
         poker.play(0, decision: .call)
         XCTAssertEqual(poker.round, 2)
-        XCTAssertEqual(poker.pot, 30)
-        XCTAssertEqual(poker.bigPot, 10)
+        XCTAssertEqual(poker.pot, 60)
+        XCTAssertEqual(poker.bigPot, 20)
         XCTAssertEqual(poker.cards.count, 3)
 
         poker.play(0, decision: .call)
@@ -125,8 +125,8 @@ final class TableTests: XCTestCase {
         poker.play(0, decision: .call)
         poker.play(1, decision: .call)
         XCTAssertEqual(poker.round, 3)
-        XCTAssertEqual(poker.pot, 90)
-        XCTAssertEqual(poker.bigPot, 30)
+        XCTAssertEqual(poker.pot, 120)
+        XCTAssertEqual(poker.bigPot, 40)
         XCTAssertEqual(poker.cards.count, 4)
         
         poker.play(0, decision: .call)
@@ -137,9 +137,16 @@ final class TableTests: XCTestCase {
         poker.play(2, decision: .call)
         poker.play(0, decision: .call)
         XCTAssertEqual(poker.round, 4)
-        XCTAssertEqual(poker.pot, 180)
-        XCTAssertEqual(poker.bigPot, 60)
+        XCTAssertEqual(poker.pot, 270)
+        XCTAssertEqual(poker.bigPot, 90)
         XCTAssertEqual(poker.cards.count, 5)
+        
+        poker.play(0, decision: .call)
+        poker.play(1, decision: .call)
+        poker.play(2, decision: .call)
+        XCTAssertTrue(poker.winner != nil)
+        XCTAssertEqual(poker.players[poker.winner!].credits, 280)
+        XCTAssertEqual(poker.pot, 0)
     }
     
     
@@ -162,8 +169,8 @@ final class TableTests: XCTestCase {
         poker.play(0, decision: .call) // 0
         XCTAssertEqual(poker.round, 4)
 
-        XCTAssertEqual(poker.pot, 40)
-        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.pot, 70)
+        XCTAssertEqual(poker.bigPot, 30)
         XCTAssertEqual(poker.cards.count, 5)
 
     }
@@ -185,8 +192,8 @@ final class TableTests: XCTestCase {
         poker.play(2, decision: .call) // 0
         XCTAssertEqual(poker.round, 4)
 
-        XCTAssertEqual(poker.pot, 40)
-        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.pot, 70)
+        XCTAssertEqual(poker.bigPot, 30)
         XCTAssertEqual(poker.cards.count, 5)
 
     }
@@ -208,8 +215,8 @@ final class TableTests: XCTestCase {
         poker.play(1, decision: .call) // 0
         XCTAssertEqual(poker.round, 4)
 
-        XCTAssertEqual(poker.pot, 40)
-        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.pot, 60)
+        XCTAssertEqual(poker.bigPot, 30)
         XCTAssertEqual(poker.cards.count, 5)
     }
     
@@ -230,8 +237,8 @@ final class TableTests: XCTestCase {
         poker.play(1, decision: .call) // 0
         XCTAssertEqual(poker.round, 4)
 
-        XCTAssertEqual(poker.pot, 40)
-        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.pot, 60)
+        XCTAssertEqual(poker.bigPot, 30)
         XCTAssertEqual(poker.cards.count, 5)
 
         poker.startGame()
@@ -242,7 +249,7 @@ final class TableTests: XCTestCase {
         XCTAssertEqual(poker.players[2].hands.count, 2)
         
         XCTAssertEqual(poker.pot, 0)
-        XCTAssertEqual(poker.bigPot, 0)
+        XCTAssertEqual(poker.bigPot, 10)
         XCTAssertEqual(poker.deck.count, Deck.full.count - 6)
         XCTAssertEqual(poker.cards.count, 0)
         XCTAssertEqual(poker.playerIndex, 0)
@@ -269,11 +276,10 @@ final class TableTests: XCTestCase {
         poker.play(1, decision: .fold) // 0
         XCTAssertEqual(poker.round, 3)
 
-        XCTAssertEqual(poker.pot, 30)
-        XCTAssertEqual(poker.bigPot, 20)
+        XCTAssertEqual(poker.bigPot, 30)
         XCTAssertEqual(poker.winner, 0)
-        XCTAssertEqual(poker.players[0].credits, 110)
-        XCTAssertEqual(poker.players[1].credits, 90)
+        XCTAssertEqual(poker.players[0].credits, 120)
+        XCTAssertEqual(poker.players[1].credits, 80)
         XCTAssertEqual(poker.players[2].credits, 100)
 
     }
@@ -285,6 +291,10 @@ final class TableTests: XCTestCase {
         poker.play(1, decision: .call) // 1
         poker.play(2, decision: .fold) // 0
         XCTAssertEqual(poker.round, 2)
+        XCTAssertEqual(poker.pot, 20)
+        XCTAssertEqual(poker.players[0].bet, 10)
+        XCTAssertEqual(poker.players[1].bet, 10)
+        XCTAssertEqual(poker.players[2].bet, 0)
         
         poker.play(0, decision: .call) // 1
         poker.play(1, decision: .bet(amount: 10)) // 1
@@ -294,21 +304,15 @@ final class TableTests: XCTestCase {
         poker.play(0, decision: .bet(amount: 10)) // 1
         poker.play(1, decision: .call) // 0
         XCTAssertEqual(poker.round, 4)
+        XCTAssertEqual(poker.pot, 60)
         
         poker.play(0, decision: .call) // 1
         poker.play(1, decision: .call) // 0
-        XCTAssertEqual(poker.round, 5)
-
-        poker.play(0, decision: .call) // 1
-        poker.play(1, decision: .bet(amount: 10)) // 0
-        poker.play(0, decision: .bet(amount: 20)) // 1
-        poker.play(1, decision: .call) // 0
         
-        XCTAssertEqual(poker.pot, 80)
-        XCTAssertEqual(poker.bigPot, 40)
         XCTAssertTrue(poker.winner != nil)
-        XCTAssertEqual(poker.players[poker.winner!].credits, 140)
-
+        XCTAssertEqual(poker.players[poker.winner!].credits, 130)
+        XCTAssertEqual(poker.pot, 0)
+        XCTAssertEqual(poker.bigPot, 30)
     }
 
 }
