@@ -252,7 +252,7 @@ final class TableTests: XCTestCase {
         XCTAssertEqual(poker.players[2].bet, 0)
     }
     
-    func testPlayAndGameEndsShouldHaveAWinner() {
+    func testPlayEveryoneFoldsShouldHaveAWinner() {
         poker.startGame()
 
         poker.play(0, decision: .call) // 2
@@ -275,6 +275,39 @@ final class TableTests: XCTestCase {
         XCTAssertEqual(poker.players[0].credits, 110)
         XCTAssertEqual(poker.players[1].credits, 90)
         XCTAssertEqual(poker.players[2].credits, 100)
+
+    }
+    
+    func testPlayAndGameEndsShouldHaveAWinner() {
+        poker.startGame()
+
+        poker.play(0, decision: .call) // 2
+        poker.play(1, decision: .call) // 1
+        poker.play(2, decision: .fold) // 0
+        XCTAssertEqual(poker.round, 2)
+        
+        poker.play(0, decision: .call) // 1
+        poker.play(1, decision: .bet(amount: 10)) // 1
+        poker.play(0, decision: .call) // 0
+        XCTAssertEqual(poker.round, 3)
+
+        poker.play(0, decision: .bet(amount: 10)) // 1
+        poker.play(1, decision: .call) // 0
+        XCTAssertEqual(poker.round, 4)
+        
+        poker.play(0, decision: .call) // 1
+        poker.play(1, decision: .call) // 0
+        XCTAssertEqual(poker.round, 5)
+
+        poker.play(0, decision: .call) // 1
+        poker.play(1, decision: .bet(amount: 10)) // 0
+        poker.play(0, decision: .bet(amount: 20)) // 1
+        poker.play(1, decision: .call) // 0
+        
+        XCTAssertEqual(poker.pot, 80)
+        XCTAssertEqual(poker.bigPot, 40)
+        XCTAssertTrue(poker.winner != nil)
+        XCTAssertEqual(poker.players[poker.winner!].credits, 140)
 
     }
 
