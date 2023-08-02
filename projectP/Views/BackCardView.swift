@@ -19,6 +19,8 @@ struct BackCardView: View {
             .foregroundColor(.gray)
         }
         .frame(width: 60, height: 90)
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(.foreground, lineWidth: 0.2)

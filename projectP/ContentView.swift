@@ -15,28 +15,26 @@ struct ContentView: View {
         ZStack {
             
             VStack {
+                if let winner = vm.winner {
+                    Text("Winner: \(vm.table.players[winner].name)")
+                }
                 Text("Pot: \(vm.table.pot)CR")
                 DeckView(deck: vm.table.cards, empty: 5 - vm.table.cards.count)
             }
 
             VStack {
-
-                HStack {
-                    
-                    VStack(alignment: .leading) {
-                        Text("Player1 - \(vm.player1.credits)CR")
-                        Text(vm.player1.hands.description)
-                        DeckView(empty: vm.player1.hands.count)
-                    }.padding(.all)
-                    
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        Text("Player2 - \(vm.player2.credits)CR")
-                        Text(vm.player2.hands.description)
-                        DeckView(empty: vm.player2.hands.count)
-                    }.padding(.all)
+                if vm.winner != nil {
+                    HStack {
+                        PlayerView(player: $vm.player2, index: 2, showHands: true, playing: $vm.player)
+                        Spacer()
+                        PlayerView(player: $vm.player1, index: 1, showHands: true, playing: $vm.player)
+                    }
+                } else {
+                    HStack {
+                        PlayerView(player: $vm.player2, index: 2, showHands: false, playing: $vm.player)
+                        Spacer()
+                        PlayerView(player: $vm.player1, index: 1, showHands: false, playing: $vm.player)
+                    }
                 }
                 
                 Spacer()
@@ -49,6 +47,7 @@ struct ContentView: View {
                 HStack {
                     
                     VStack(alignment: .leading) {
+                        Text(vm.player0.lastDecision?.description ?? "")
                         Text("\(vm.player0.credits)CR")
                         DeckView(deck: vm.player0.hands)
                         Text(vm.p1Deck?.hand.description ?? "?")
@@ -57,19 +56,29 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    HStack {
-                        Button("Call") {
-                            vm.action(.call)
+                    VStack {
+                        
+                        if vm.player == 0 {
+                            Button("Check") {
+                                Task {
+                                    await vm.action(.check)
+                                }
+                            }.buttonStyle(.bordered)
+                            Button("Fold") {
+                                Task {
+                                    await vm.action(.fold)
+                                }
+                            }.buttonStyle(.bordered)
+                            Button("Raise") {
+                                Task {
+                                    await vm.action(.bet(amount: 10))
+                                }
+                            }.buttonStyle(.bordered)
+                        } else {
+                            Text("wait")
                         }
-                            .buttonStyle(.bordered)
-                        Button("Fold") {
-                            vm.action(.fold)
-                        }
-                            .buttonStyle(.bordered)
-                        Button("Raise") {
-                            vm.action(.bet(amount: 10))
-                        }
-                            .buttonStyle(.bordered)
+                        
+                        
                     }.padding(.all)
                 }
             }

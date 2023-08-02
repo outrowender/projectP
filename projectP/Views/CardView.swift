@@ -41,13 +41,13 @@ struct CardView: View {
             }
             .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
             .frame(width: 60, height: 90)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(.foreground, lineWidth: 0.2)
             )
-            
 
-        
     }
     
     var color: Color {
