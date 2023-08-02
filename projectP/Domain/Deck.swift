@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Deck logic
 struct Deck: Comparable {
     
-    let all: [Card]
+    let all: [Card] // full current deck
     let table: [Card]
     let ours: [Card]
     private(set) var hand: Hand!
@@ -71,7 +71,7 @@ struct Deck: Comparable {
     }
     
     var strength: Int {
-        var remainings: [Card] = []
+        var remainings: [Card] = [] // 5 + 2 vs 5 + ??
 
         for rank in Card.Rank.allCases { // TODO: revisit this to use .full
             for suit in Card.Suit.allCases {
@@ -91,7 +91,7 @@ struct Deck: Comparable {
 
             if ourRank > oppRank {
                 ahead += 1
-            } else if ourRank == oppRank {
+            } else if ourRank == oppRank { // TODO: revisit ties logic
                 tied += 1
             } else {
                 behind += 1

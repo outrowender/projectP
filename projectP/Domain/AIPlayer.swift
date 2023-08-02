@@ -26,7 +26,7 @@ class AIPlayer {
         }
         
         if deck.strength > 20 {
-            return .call
+            return .check
         }
         
         return .fold

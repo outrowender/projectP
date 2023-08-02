@@ -9,10 +9,10 @@ import Foundation
 
 struct Player: Equatable {
     let id: String
+    let name: String
     var hands: [Card] = []
     var lastDecision: Decision?
     
-    var isDealer: Bool = false
     private(set) var credits: Int
     private(set) var bet: Int = 0
     
@@ -49,10 +49,24 @@ struct Player: Equatable {
 }
 
 extension Player {
-    enum Decision: Equatable {
+    enum Decision: Equatable, CustomStringConvertible {
         case fold
-        case call
+        case check
         case bet(amount: Int)
         case allIn
+        
+        var description: String {
+            switch self {
+                
+            case .fold:
+                return "Folded"
+            case .check:
+                return "Check"
+            case .bet(amount: let amount):
+                return "Bet \(amount) CR"
+            case .allIn:
+                return "All in"
+            }
+        }
     }
 }
