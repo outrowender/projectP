@@ -11,14 +11,14 @@ import XCTest
 final class PlayerTests: XCTestCase {
     
     func testInitShouldBeValid() {
-        let player = Player(id: "a", credits: 100)
+        let player = Player(id: "a", name: "a", credits: 100)
         
         XCTAssertEqual(player.bet, 0)
         XCTAssertEqual(player.credits, 100)
     }
     
     func testBetShouldRemoveMoneyFromCreditAndMoveToBet() {
-        var player = Player(id: "a", credits: 100)
+        var player = Player(id: "a", name: "a", credits: 100)
         
         player.bet(20)
         
@@ -27,7 +27,7 @@ final class PlayerTests: XCTestCase {
     }
     
     func testBetShouldRemoveMoneyFromCreditAndMoveToBetTwice() {
-        var player = Player(id: "a", credits: 100)
+        var player = Player(id: "a", name: "a", credits: 100)
         
         player.bet(20)
         player.bet(30)
@@ -37,7 +37,7 @@ final class PlayerTests: XCTestCase {
     }
     
     func testPayShouldRestoreCredits() {
-        var player = Player(id: "a", credits: 100)
+        var player = Player(id: "a", name: "a", credits: 100)
         
         player.pay(50)
         
@@ -45,7 +45,7 @@ final class PlayerTests: XCTestCase {
     }
     
     func testChargeShouldTakeOnlyBet() {
-        var player = Player(id: "a", credits: 100)
+        var player = Player(id: "a", name: "a", credits: 100)
         
         player.bet(50)
         let charge = player.charge()
@@ -56,7 +56,7 @@ final class PlayerTests: XCTestCase {
     }
     
     func testAllInShouldTakeAllCredits() {
-        var player = Player(id: "a", credits: 100)
+        var player = Player(id: "a", name: "a", credits: 100)
         
         let amount = player.allIn()
         

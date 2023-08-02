@@ -11,7 +11,7 @@ import XCTest
 final class AIPlayerTests: XCTestCase {
     
     func testAIplayerShouldAllWithStrongHand() {
-        let player = Player(id: "1", hands: Card.array("A♠️ K♠️"), credits: 50)
+        let player = Player(id: "1", name: "1", hands: Card.array("A♠️ K♠️"), credits: 50)
         let table = Card.array("4♥️ 2♣️ Q♠️ J♠️ 10♠️")
         
         let decision = AIPlayer(player).decide(table: table, pot: 300, opponents: 3)
